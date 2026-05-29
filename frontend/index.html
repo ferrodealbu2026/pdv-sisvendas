@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>PDV SISVENDAS</title>
+
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body>
+
+<div id="loginTela">
+
+    <h2>OPERADOR</h2>
+
+    <input id="senhaOperador" type="password" placeholder="Digite sua senha">
+    
+    <button onclick="entrarOperador()">Entrar</button>
+
+</div>
+
+<div class="container">
+
+    <!-- TÍTULO -->
+
+    <h1>PDV SISVENDAS</h1>
+
+    <!-- OPERADOR -->
+
+    <div class="operador-box">
+
+        <label>OPERADOR</label>
+
+        <input
+            type="text"
+            id="operador"
+            placeholder="Operador"
+        >
+
+    </div>
+
+    <!-- CABEÇALHO -->
+
+    <div class="topo">
+
+        <div>ID</div>
+
+        <div>PRODUTO</div>
+
+        <div>QUANTIDADE</div>
+
+        <div>PREÇO</div>
+
+        <div>SUBTOTAL</div>
+
+        <div>DATA/HORA</div>
+
+    </div>
+
+    <!-- LINHA PDV -->
+
+    <div class="linha">
+
+        <!-- ID PRODUTO -->
+
+        <div>
+
+            <input
+                type="text"
+                id="idProduto"
+                readonly
+            >
+
+        </div>
+
+        <!-- PRODUTO -->
+
+        <div>
+
+            <select id="produto">
+
+                <option value="">
+                    Selecione
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- QUANTIDADE -->
+
+        <div>
+
+            <input
+                type="number"
+                id="quantidade"
+                value="1"
+                min="1"
+            >
+
+        </div>
+
+        <!-- PREÇO -->
+
+        <div>
+
+            <input
+                type="text"
+                id="preco"
+                placeholder="000.00"
+                readonly
+            >
+
+        </div>
+
+        <!-- SUBTOTAL -->
+
+        <div>
+
+            <input
+                type="text"
+                id="subtotal"
+                placeholder="000.00"
+                readonly
+            >
+
+        </div>
+
+        <!-- DATA/HORA -->
+
+        <div>
+
+            <input
+                type="text"
+                id="datahora"
+                readonly
+            >
+
+        </div>
+
+    </div>
+
+    <!-- TOTAL -->
+
+    <div class="total-geral">
+
+        TOTAL A PAGAR:
+
+        <span id="total">
+
+            R$ 000,00
+
+        </span>
+
+    </div>
+
+    <!-- PAGAMENTO -->
+
+    <div class="pagamento">
+
+        <!-- TIPO PAGAMENTO -->
+
+        <div>
+
+            <label>
+                Tipo de Pagamento
+            </label>
+
+            <select id="pagamento">
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+                <option value="PIX">
+                    PIX
+                </option>
+
+                <option value="Débito">
+                    Débito
+                </option>
+
+                <option value="Crédito">
+                    Crédito
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- VALOR RECEBIDO -->
+
+        <div>
+
+            <label>
+                Valor Recebido
+            </label>
+
+            <input
+                type="number"
+                id="recebido"
+                placeholder="000.00"
+            >
+
+        </div>
+
+    </div>
+
+    <!-- RESULTADO -->
+
+    <div class="resultado">
+
+        <!-- TOTAL PAGO -->
+
+        <div>
+
+            <label>
+                Total Pago
+            </label>
+
+            <input
+                type="number"
+                id="totalPago"
+                placeholder="000.00"
+                readonly
+            >
+
+        </div>
+
+        <!-- TROCO -->
+
+        <div>
+
+            <label>
+                Troco
+            </label>
+
+            <input
+                type="number"
+                id="troco"
+                placeholder="000.00"
+                readonly
+            >
+
+        </div>
+
+    </div>
+
+    <!-- BOTÕES -->
+
+    <div class="botoes">
+
+        <button onclick="finalizarVenda()">
+
+            Finalizar Venda
+
+        </button>
+
+        <button onclick="notaFiscal()">
+
+            Nota Fiscal
+
+        </button>
+         
+        <button onclick="encerrarOperações()">
+          ENCERRAR OPERAÇÕES
+        </button>
+
+    </div>
+
+    <!-- HISTÓRICO -->
+
+    <section class="historico-box">
+
+        <h2>HISTÓRICO DE VENDAS</h2>
+
+        <div class="historico-topo">
+
+            <div>ID</div>
+
+            <div>PRODUTO</div>
+
+            <div>QUANTIDADE</div>
+
+            <div>TOTAL</div>
+
+            <div>DATA/HORA</div>
+
+            <div>OPERADOR</div>
+
+        </div>
+
+        <!-- LINHAS HISTÓRICO -->
+
+        <div id="historico">
+
+        </div>
+
+    </section>
+
+    <!-- RECIBO -->
+
+    <div
+        class="recibo"
+        id="recibo">
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@ Sistema de PDV (Ponto de Venda) para supermercados desenvolvido com foco em apre
 O projeto simula o fluxo operacional básico de um caixa comercial, incluindo autenticação de operador, controle de vendas, cálculo automático de subtotal, finalização de compra, histórico de vendas e encerramento de operações.
 Sobre o Desenvolvedor
 Me chamo Fernando Rodrigues de Albuquerque, autor deste projeto, graduado e pós-graduado em Matemática (UFPA), graduado em Ciencias Físicas e Biológicas (UNISANTOS-SP), concluindo pós-graduação em TI (FAVENI-PR), e atualmente sou estudante em fase final do curso de Análise e Desenvolvimento de Sistemas, pela Universidade Estacio de Sá - RJ.
-Dedico-me ao estudo e desenvolvimento de Sistemas com Backend com Node.js, Express e MySQL, além de React no Frontend, para desenvolver projetos práticos voltados para APIs REST, integração com banco de dados e organização de aplicações Full Stack.
+Dedico-me ao estudo e desenvolvimento de Sistemas com Backend, Node.js, Express e MySQL, além de React no Frontend, para desenvolver projetos práticos voltados para APIs REST, integração com banco de dados e organização de aplicações Full Stack.
 Pretendo no momento uma oportunidade de estágio na área de desenvolvimento de software, preferencialmente em modalidade home office.
 
 TECNOLOGIAS UTILIZADAS

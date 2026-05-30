@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const mysql = require("mysql2/promise");
 const cors = require("cors");
+const mysql = require("mysql2/promise");
 
 const produtoRoutes = require('./routes/produtoRoutes');
 const vendaRoutes = require('./routes/vendaRoutes');
@@ -9,31 +9,32 @@ const operadorRoutes = require('./routes/operadorRoutes');
 
 const app = express();
 
-// MIDDLEWARES
+// ===================== MIDDLEWARES =====================
 app.use(cors());
 app.use(express.json());
 
-//ROTAS
+// ===================== ROTAS =====================
 app.use('/produtos', produtoRoutes);
 app.use('/vendas', vendaRoutes);
 app.use('/operador', operadorRoutes);
 
-
-// CONEXÃO MYSQL
+// ===================== CONEXÃO MYSQL =====================
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-
-// TESTE
+// ===================== TESTE =====================
 app.get("/", (req, res) => {
   res.send("Servidor funcionando!");
 });
 
-// LISTAR PRODUTOS
+// ===================== LISTAR PRODUTOS =====================
 app.get("/produtos", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM produtos");
@@ -43,6 +44,7 @@ app.get("/produtos", async (req, res) => {
   }
 });
 
+// ===================== REGISTRAR VENDA =====================
 app.post("/vendas", async (req, res) => {
   const { itens, total, pagamento, valorRecebido, troco } = req.body;
 
@@ -56,7 +58,7 @@ app.post("/vendas", async (req, res) => {
     conn = await pool.getConnection();
     await conn.beginTransaction();
 
-    // CRIA A VENDA PRIMEIRO
+    // CRIA VENDA
     const [vendaResult] = await conn.query(
       `INSERT INTO vendas (total, pagamento, valor_recebido, troco)
        VALUES (?, ?, ?, ?)`,
@@ -65,10 +67,9 @@ app.post("/vendas", async (req, res) => {
 
     const vendaId = vendaResult.insertId;
 
-    // PROCESSA CADA ITEM
+    // ITENS DA VENDA
     for (const item of itens) {
 
-      //  VERIFICA ESTOQUE PRIMEIRO (CORRETO)
       const [produtoRows] = await conn.query(
         "SELECT estoque FROM produtos WHERE id = ?",
         [item.id]
@@ -84,14 +85,12 @@ app.post("/vendas", async (req, res) => {
         throw new Error(`Estoque insuficiente para produto ${item.id}`);
       }
 
-      //  INSERE ITEM DA VENDA (SÓ SE TIVER ESTOQUE)
       await conn.query(
         `INSERT INTO itens_venda (venda_id, produto_id, quantidade, preco)
          VALUES (?, ?, ?, ?)`,
         [vendaId, item.id, item.quantidade, item.preco]
       );
 
-      //  BAIXA ESTOQUE
       await conn.query(
         `UPDATE produtos 
          SET estoque = estoque - ? 
@@ -100,7 +99,6 @@ app.post("/vendas", async (req, res) => {
       );
     }
 
-    //  CONFIRMA TRANSAÇÃO
     await conn.commit();
 
     res.json({ mensagem: "Venda realizada com sucesso!" });
@@ -119,7 +117,9 @@ app.post("/vendas", async (req, res) => {
   }
 });
 
-// START SERVER
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
-  }); 
+// ===================== START SERVER =====================
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
